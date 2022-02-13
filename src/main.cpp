@@ -26,9 +26,9 @@ int main(int argc, char *argv[]){
     Utils::printMatrix(&parser.cnfGraph, "CNF Graph");
 
     AllMaxIndependentSetsSolver solver = AllMaxIndependentSetsSolver(&parser);
-    auto a = solver.gerateAllMaxIndependentSets();
+    auto maxIndependentSets = solver.gerateAllMaxIndependentSets();
 
-    Utils::printMatrix(&parser.cnfGraph, "Solution");
+    Utils::printMatrix(&maxIndependentSets, "Solution");
 
     return 0;
 }
