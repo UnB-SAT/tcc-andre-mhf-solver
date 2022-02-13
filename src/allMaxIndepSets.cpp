@@ -1,7 +1,4 @@
 #include "allMaxIndepSets.hpp"
-#include <iostream>
-
-using namespace std;
 
 AllMaxIndependentSetsSolver::AllMaxIndependentSetsSolver(Parser* parser){
     this->parser = parser;

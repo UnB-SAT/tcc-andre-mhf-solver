@@ -3,6 +3,7 @@
 #include <fstream>
 #include "parser.hpp"
 #include "allMaxIndepSets.hpp"
+#include "utils.hpp"
 
 using namespace std;
 
@@ -22,19 +23,12 @@ int main(int argc, char *argv[]){
 
     Parser parser = Parser(&in_file);
     in_file.close();
-    parser.printCnfGraph();
+    Utils::printMatrix(&parser.cnfGraph, "CNF Graph");
 
     AllMaxIndependentSetsSolver solver = AllMaxIndependentSetsSolver(&parser);
     auto a = solver.gerateAllMaxIndependentSets();
 
-    cout << "Solution" << endl;
-    for(size_t i = 0; i < a.size(); i++){
-        cout << i << ": ";
-        for(auto j : a[i]){
-            cout << j << " ";
-        }
-        cout << endl;
-    }
+    Utils::printMatrix(&parser.cnfGraph, "Solution");
 
     return 0;
 }

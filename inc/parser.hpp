@@ -11,7 +11,6 @@ class Parser{
 public:
     Parser(ifstream* file);
     int getLitPos(int lit);
-    void printCnfGraph();
 
     int numVariables;
     int numClausules;

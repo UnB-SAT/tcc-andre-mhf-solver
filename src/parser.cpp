@@ -51,14 +51,3 @@ void Parser::insertIntoCnfGraph(int a, int b){
 int Parser::getLitPos(int lit){
     return numClausules + (lit < 0 ? (abs(lit)<<1) : (lit<<1) - 1);
 }
-
-void Parser::printCnfGraph(){
-    cout << "CNF Graph:" << endl;
-    for(size_t i = 0; i < cnfGraph.size(); i++){
-        cout << i << ": ";
-        for(auto j : cnfGraph[i]){
-            cout << j << " ";
-        }
-        cout << endl;
-    }
-}
