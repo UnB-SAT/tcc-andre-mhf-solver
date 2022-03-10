@@ -11,3 +11,11 @@ void Utils::printMatrix(vector<set<int>>* matrix, string title){
         cout << endl;
     }
 }
+
+void Utils::printLine(set<int>* line, string title){
+    cout << title << endl;
+    for(auto x : *line){
+        cout << x << " ";
+    }
+    cout << endl;
+}

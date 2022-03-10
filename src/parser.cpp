@@ -29,7 +29,10 @@ Parser::Parser(ifstream* file){
             tmp_s.insert(tmp_i);
             *file >> tmp_i;
         }
-        if(tmp_s.size() == 2){
+        if(tmp_s.size() == 1){
+            soloLits.insert(*tmp_s.begin());
+        }
+        else if(tmp_s.size() == 2){
             for(auto x : tmp_s){
                 int litPos = getLitPos(x);
                 insertIntoCnfGraph(litPos, numClausules);
@@ -39,6 +42,10 @@ Parser::Parser(ifstream* file){
                     insertIntoCnfGraph(litPos, *inverserLitPos);
                 }
             }
+            cnfClausules.push_back(tmp_s);
+        }
+        else{
+            hornClausules.push_back(tmp_s);
         }
     }
 }

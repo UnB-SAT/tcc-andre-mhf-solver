@@ -15,6 +15,10 @@ public:
     int numVariables;
     int numClausules;
     vector<set<int>> cnfGraph;
+
+    vector<set<int>> cnfClausules;
+    vector<set<int>> hornClausules;
+    set<int> soloLits;
 private:
     void insertIntoCnfGraph(int a, int b);
 };

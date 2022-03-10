@@ -1,38 +1,52 @@
 #include "allMaxIndepSets.hpp"
+#include "utils.hpp"
+#include <iostream>
 
 AllMaxIndependentSetsSolver::AllMaxIndependentSetsSolver(Parser* parser){
     this->parser = parser;
+    queue.clear();
 }
 
 vector<set<int>> AllMaxIndependentSetsSolver::gerateAllMaxIndependentSets(){
     vector<set<int>> maxIdenpendentSets;
-    queue.insert({parser->numClausules});
+    set<int> tmp_next;
+    for(int i = 0; i < parser->numClausules; i++){
+        tmp_next.insert(i);
+    }
+    queue.insert(tmp_next);
     while(!queue.empty()){
-        auto next = queue.begin();
-        queue.erase(next);
+        auto tmp_s = *queue.begin();
+        maxIdenpendentSets.push_back(tmp_s);
         for(size_t j = 0; j < parser->cnfGraph.size(); j++){
-            for(size_t i = 0; i < parser->cnfGraph[j].size(); i++){
-                if(isAdjacent(i,j) && i < j){
-                    auto sj = *next;
-                    for(auto x : sj){
-                        if((size_t)x > j){
-                            sj.erase(x);
+            for(auto i : tmp_s){
+                if(isAdjacent(i,j) && (size_t)i < j){
+                    
+                    set<int> sj; 
+                    for(auto x : tmp_s){
+                        if((size_t)x <= j){
+                            sj.insert(x);
                         }
                     }
-                    for(auto x : parser->cnfGraph[j]){
+
+                    auto tj = parser->cnfGraph[j];
+
+                    for(auto x : tj){
                         auto xPos = sj.find(x);
                         if(xPos != sj.end()){
                             sj.erase(xPos);
                         }
                     }
+
                     sj.insert(j);
+
                     if(isMaximal(sj)){
-                        maxIdenpendentSets.push_back(sj);
+                        queue.insert(sj);
+                        break;
                     }
-                    break;
                 }
             }
         }
+        queue.erase(queue.begin());
     }
     maxIdenpendentSets.erase(maxIdenpendentSets.begin());
     return maxIdenpendentSets;
@@ -45,9 +59,14 @@ bool AllMaxIndependentSetsSolver::isAdjacent(int a, int b){
 bool AllMaxIndependentSetsSolver::isMaximal(set<int> potentialSet){
     set<int> visibleClausules;
     for(auto x : potentialSet){
-        for(auto y : parser->cnfGraph[x]){
-            if(y < parser->numClausules){
-                visibleClausules.insert(y);
+        if (x <= parser->numClausules) {
+            visibleClausules.insert(x);
+        }
+        else {
+            for(auto y : parser->cnfGraph[x]){
+                if(y < parser->numClausules){
+                    visibleClausules.insert(y);
+                }
             }
         }
     }
