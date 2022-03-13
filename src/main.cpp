@@ -4,12 +4,16 @@
 #include "parser.hpp"
 #include "allMaxIndepSets.hpp"
 #include "utils.hpp"
+#include "solver.hpp"
+
+#define DEBUG 1
 
 using namespace std;
 
 int main(int argc, char *argv[]){
     if(argc < 2){
-        cout << "Usage: program file_path" << endl;
+        cout << "Invalid args" << endl;
+        cout << "Usage: " << argv[0] << " mhf_file_path" << endl;
         return -1;
     }
 
@@ -24,16 +28,36 @@ int main(int argc, char *argv[]){
     Parser parser = Parser(&in_file);
     in_file.close();
     
-    // Utils::printMatrix(&parser.cnfGraph, "CNF Graph");
-    // Utils::printMatrix(&parser.cnfClausules, "CNF clausules");
-    // Utils::printMatrix(&parser.hornClausules, "Horn clausules");
-    // Utils::printLine(&parser.soloLits, "Solo literals");
+    if (DEBUG) {
+        Utils::printMatrix(parser.cnfGraph, "CNF Graph");
+        Utils::printMatrix(parser.cnfClausules, "CNF clausules");
+        Utils::printMatrix(parser.hornClausules, "Horn clausules");
+        Utils::printLine(parser.soloLits, "Solo literals");
+    }
 
-    AllMaxIndependentSetsSolver solver = AllMaxIndependentSetsSolver(&parser);
+    Solver solver = Solver();
 
-    auto matrix = solver.gerateAllMaxIndependentSets();
+    switch (parser.functionType) {
+        case SOLO:
+            solver.solveSolo(parser.soloLits);
+            break;
+        case CNF:
+            //solver.solve2Cnf(parser.nodes, parser.g, parser.gt);
+            break;
+        case HORN:
+            break;
+        case MHF:
+            break;
+        default:
+            cout << "Invalid function type" << endl;
+            return -3;
+    }
 
-    Utils::printMatrix(&matrix, "ALL Max Indep Set");
+    // AllMaxIndependentSetsSolver solver = AllMaxIndependentSetsSolver(&parser);
+
+    // auto matrix = ;
+
+    // Utils::printMatrix(&solver.gerateAllMaxIndependentSets(), "ALL Max Indep Set");
 
     return 0;
 }

@@ -11,12 +11,14 @@ using namespace std;
 class AllMaxIndependentSetsSolver{
 public:
     AllMaxIndependentSetsSolver(Parser* parser);
+    
     vector<set<int>> gerateAllMaxIndependentSets();
 private:
-    bool isAdjacent(int a, int b);
-    bool isMaximal(set<int> potentialSet);
     Parser* parser;
     set<set<int>> queue;
+
+    bool isAdjacent(int a, int b);
+    bool isMaximal(set<int> potentialSet);
 };
 
 #endif

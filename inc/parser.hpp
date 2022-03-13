@@ -1,6 +1,11 @@
 #ifndef _PARSER_HPP
 #define _PARSER_HPP
 
+#define SOLO 0
+#define CNF 1
+#define HORN 2
+#define MHF 3
+
 #include <fstream>
 #include <vector>
 #include <set>
@@ -9,8 +14,7 @@ using namespace std;
 
 class Parser{
 public:
-    Parser(ifstream* file);
-    int getLitPos(int lit);
+    int functionType;
 
     int numVariables;
     int numClausules;
@@ -19,8 +23,13 @@ public:
     vector<set<int>> cnfClausules;
     vector<set<int>> hornClausules;
     set<int> soloLits;
+
+    Parser(ifstream* file);
+
+    int getLitPos(int lit);
 private:
     void insertIntoCnfGraph(int a, int b);
+    void setFunctionType();
 };
 
 #endif

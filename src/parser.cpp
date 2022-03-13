@@ -48,6 +48,8 @@ Parser::Parser(ifstream* file){
             hornClausules.push_back(tmp_s);
         }
     }
+
+    setFunctionType();
 }
 
 void Parser::insertIntoCnfGraph(int a, int b){
@@ -57,4 +59,20 @@ void Parser::insertIntoCnfGraph(int a, int b){
 
 int Parser::getLitPos(int lit){
     return numClausules + (lit < 0 ? (abs(lit)<<1) : (lit<<1) - 1);
+}
+
+void Parser::setFunctionType(){
+    if (hornClausules.size()) {
+        if (cnfClausules.size()) {
+            functionType = MHF;
+        } else {
+            functionType = HORN;
+        }
+    } else {
+        if (cnfClausules.size()) {
+            functionType = CNF;
+        } else {
+            functionType = SOLO;
+        }
+    }
 }

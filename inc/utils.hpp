@@ -9,8 +9,8 @@ using namespace std;
 
 class Utils{
 public:
-    static void printMatrix(vector<set<int>>* matrix, string title);
-    static void printLine(set<int>* line, string title);
+    static void printMatrix(vector<set<int>> matrix, string title);
+    static void printLine(set<int> line, string title);
 };
 
 #endif
