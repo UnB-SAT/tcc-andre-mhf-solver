@@ -2,6 +2,7 @@
 #define _SOLVER_HPP
 
 #include <set>
+#include <vector>
 
 using namespace std;
 
@@ -10,7 +11,7 @@ public:
     Solver();
 
     void solveSolo(set<int> lits);
-    void solve2Cnf(int n, vector<vector<int>> g, vector<vector<int>> gt);
+    void solve2Cnf(int numVariables, vector<set<int>> clausules, set<int> soloLiterals);
     void solveHorn();
     void solveMHF();
 };

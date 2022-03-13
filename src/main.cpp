@@ -6,7 +6,7 @@
 #include "utils.hpp"
 #include "solver.hpp"
 
-#define DEBUG 1
+#define DEBUG 0
 
 using namespace std;
 
@@ -42,11 +42,13 @@ int main(int argc, char *argv[]){
             solver.solveSolo(parser.soloLits);
             break;
         case CNF:
-            //solver.solve2Cnf(parser.nodes, parser.g, parser.gt);
+            solver.solve2Cnf(parser.numVariables, parser.cnfClausules, parser.soloLits);
             break;
         case HORN:
+            //solver.solveHorn();
             break;
         case MHF:
+            //solver.solveMHF();
             break;
         default:
             cout << "Invalid function type" << endl;
