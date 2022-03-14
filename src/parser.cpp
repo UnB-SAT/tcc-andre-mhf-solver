@@ -44,7 +44,15 @@ Parser::Parser(ifstream* file){
             }
             cnfClausules.push_back(tmp_s);
 
-            // TODO: 2 clausules could be also Horn
+            int totalPositive = 0;
+            for (auto tmp : tmp_s) {
+                if (tmp > 0) {
+                    totalPositive++;
+                }
+            }
+            if (totalPositive < 2) {
+                hornClausules.push_back(tmp_s);    
+            }
         }
         else{
             hornClausules.push_back(tmp_s);
@@ -64,17 +72,20 @@ int Parser::getLitPos(int lit){
 }
 
 void Parser::setFunctionType(){
-    if (hornClausules.size()) {
-        if (cnfClausules.size()) {
-            functionType = MHF;
-        } else {
-            functionType = HORN;
-        }
-    } else {
-        if (cnfClausules.size()) {
-            functionType = CNF;
-        } else {
-            functionType = SOLO;
-        }
+    if (!cnfClausules.size() && !hornClausules.size()) {
+        functionType = SOLO;
+        return;
     }
+
+    if (cnfClausules.size() + soloLits.size() == (size_t)numClausules) {
+        functionType = CNF;
+        return;
+    }
+
+    if (hornClausules.size() + soloLits.size() == (size_t)numClausules) {
+        functionType = HORN;
+        return;
+    }
+
+    functionType = MHF;
 }

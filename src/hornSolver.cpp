@@ -68,12 +68,11 @@ void HornSolver::printAnswer() {
         auto valuePos = values.find(i);
         if (valuePos != values.end()) {
             if (valuePos->second) {
-                cout << i << endl;
-            } else {
-                cout << (i * -1) << endl;
+                cout << i << " ";
+                continue;
             }
-        } else {
-            cout << (i * -1) << endl;
         }
+        cout << (i * -1) << " ";
     }
+    cout << endl;
 }
