@@ -86,8 +86,8 @@ void Solver::solveMHF(){
         }
     }
 
-    AllMaxIndependentSetsSolver solver = AllMaxIndependentSetsSolver(parser->numVariables, parser->numClausules, cnfGraph);
-    auto tests = solver.gerateAllMaxIndependentSets();
+    AllMaxIndependentSetsSolver MISSolver = AllMaxIndependentSetsSolver(parser->numVariables, parser->numClausules, cnfGraph);
+    auto tests = MISSolver.gerateAllMaxIndependentSets();
 
     for (auto test : tests) {
         HornSolver hornSolver = HornSolver();
