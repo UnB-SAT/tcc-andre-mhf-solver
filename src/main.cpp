@@ -6,7 +6,7 @@
 #include "utils.hpp"
 #include "solver.hpp"
 
-#define DEBUG 0
+#define DEBUG 1
 
 using namespace std;
 
@@ -25,8 +25,14 @@ int main(int argc, char *argv[]){
         return -2;
 	}
 
-    Parser parser = Parser(&in_file);
+    Parser parser = Parser();
+    auto parseOk = parser.parse(&in_file);
     in_file.close();
+
+    if (parseOk) {
+        cout << "Not a MHF" << endl;
+        return -3;
+    }
     
     if (DEBUG) {
         Utils::printMatrix(parser.cnfClausules, "CNF clausules");
@@ -52,7 +58,7 @@ int main(int argc, char *argv[]){
             break;
         default:
             cout << "Invalid function type" << endl;
-            return -3;
+            return -4;
     }
 
     return 0;

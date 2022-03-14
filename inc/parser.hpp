@@ -23,7 +23,9 @@ public:
     vector<set<int>> hornClausules;
     set<int> soloLiterals;
 
-    Parser(ifstream* file);
+    Parser();
+
+    int parse(ifstream* file);
 private:
     void setFunctionType();
 };

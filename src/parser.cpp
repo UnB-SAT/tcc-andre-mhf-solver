@@ -3,7 +3,9 @@
 
 using namespace std;
 
-Parser::Parser(ifstream* file){
+Parser::Parser() { }
+
+int Parser::parse(ifstream* file) {
     char line_type;
     
     *file >> line_type;
@@ -22,9 +24,13 @@ Parser::Parser(ifstream* file){
         int tmp_i;
         *file >> tmp_i;
         tmp_s.insert(tmp_i);
+        int totalPositive = 0;
         while(tmp_i){
             tmp_s.insert(tmp_i);
             *file >> tmp_i;
+            if (tmp_i > 0) {
+                totalPositive++;
+            }
         }
         if(tmp_s.size() == 1){
             soloLiterals.insert(*tmp_s.begin());
@@ -32,22 +38,21 @@ Parser::Parser(ifstream* file){
         else if(tmp_s.size() == 2){            
             cnfClausules.push_back(tmp_s);
 
-            int totalPositive = 0;
-            for (auto tmp : tmp_s) {
-                if (tmp > 0) {
-                    totalPositive++;
-                }
-            }
             if (totalPositive < 2) {
                 hornClausules.push_back(tmp_s);    
             }
         }
         else{
-            hornClausules.push_back(tmp_s);
+            if (totalPositive < 2) {
+                hornClausules.push_back(tmp_s);
+            } 
+            return -1;
         }
     }
 
     setFunctionType();
+
+    return 0;
 }
 
 void Parser::setFunctionType(){
