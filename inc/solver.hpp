@@ -3,17 +3,23 @@
 
 #include <set>
 #include <vector>
+#include "parser.hpp"
 
 using namespace std;
 
 class Solver{
 public:
-    Solver();
+    Solver(Parser* parser);
 
-    void solveSolo(set<int> lits);
-    void solve2Cnf(int numVariables, vector<set<int>> clausules, set<int> soloLiterals);
-    void solveHorn(int numVariables, vector<set<int>> clausules, set<int> initialValues);
+    void solveSolo();
+    void solve2Cnf();
+    void solveHorn();
     void solveMHF();
+private:
+    Parser* parser;
+
+    int getLitPos(int lit);
+    void insertIntoGraph(vector<set<int>>* graph, int a, int b);
 };
 
 #endif

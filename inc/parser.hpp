@@ -17,18 +17,14 @@ public:
     int functionType;
 
     int numVariables;
-    int numClausules;
-    vector<set<int>> cnfGraph;
+    int numClausules;    
 
     vector<set<int>> cnfClausules;
     vector<set<int>> hornClausules;
-    set<int> soloLits;
+    set<int> soloLiterals;
 
     Parser(ifstream* file);
-
-    int getLitPos(int lit);
 private:
-    void insertIntoCnfGraph(int a, int b);
     void setFunctionType();
 };
 

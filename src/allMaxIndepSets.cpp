@@ -2,22 +2,25 @@
 #include "utils.hpp"
 #include <iostream>
 
-AllMaxIndependentSetsSolver::AllMaxIndependentSetsSolver(Parser* parser){
-    this->parser = parser;
-    queue.clear();
+AllMaxIndependentSetsSolver::AllMaxIndependentSetsSolver(int numVariables, int numClausules, vector<set<int>> cnfGraph){
+    this->numClausules = numClausules;
+    this->numVariables = numVariables;
+    this->cnfGraph = cnfGraph;
 }
 
 vector<set<int>> AllMaxIndependentSetsSolver::gerateAllMaxIndependentSets(){
     vector<set<int>> maxIdenpendentSets;
     set<int> tmp_next;
-    for(int i = 0; i < parser->numClausules; i++){
+    for(int i = 0; i < numClausules; i++){
         tmp_next.insert(i);
     }
     queue.insert(tmp_next);
     while(!queue.empty()){
         auto tmp_s = *queue.begin();
-        maxIdenpendentSets.push_back(tmp_s);
-        for(size_t j = 0; j < parser->cnfGraph.size(); j++){
+        if (*tmp_s.begin() > numClausules) {
+            maxIdenpendentSets.push_back(tmp_s);
+        }
+        for(size_t j = 0; j < cnfGraph.size(); j++){
             for(auto i : tmp_s){
                 if(isAdjacent(i,j) && (size_t)i < j){
                     
@@ -28,7 +31,7 @@ vector<set<int>> AllMaxIndependentSetsSolver::gerateAllMaxIndependentSets(){
                         }
                     }
 
-                    auto tj = parser->cnfGraph[j];
+                    auto tj = cnfGraph[j];
 
                     for(auto x : tj){
                         auto xPos = sj.find(x);
@@ -48,27 +51,26 @@ vector<set<int>> AllMaxIndependentSetsSolver::gerateAllMaxIndependentSets(){
         }
         queue.erase(queue.begin());
     }
-    maxIdenpendentSets.erase(maxIdenpendentSets.begin());
     return maxIdenpendentSets;
 }
 
 bool AllMaxIndependentSetsSolver::isAdjacent(int a, int b){
-    return parser->cnfGraph[a].find(b) != parser->cnfGraph[a].end();
+    return cnfGraph[a].find(b) != cnfGraph[a].end();
 }
 
 bool AllMaxIndependentSetsSolver::isMaximal(set<int> potentialSet){
     set<int> visibleClausules;
     for(auto x : potentialSet){
-        if (x <= parser->numClausules) {
+        if (x <= numClausules) {
             visibleClausules.insert(x);
         }
         else {
-            for(auto y : parser->cnfGraph[x]){
-                if(y < parser->numClausules){
+            for(auto y : cnfGraph[x]){
+                if(y < numClausules){
                     visibleClausules.insert(y);
                 }
             }
         }
     }
-    return visibleClausules.size() == (size_t)parser->numClausules;
+    return visibleClausules.size() == (size_t)numClausules;
 }

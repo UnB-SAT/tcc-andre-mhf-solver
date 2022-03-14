@@ -10,11 +10,13 @@ using namespace std;
 
 class AllMaxIndependentSetsSolver{
 public:
-    AllMaxIndependentSetsSolver(Parser* parser);
+    AllMaxIndependentSetsSolver(int numVariables, int numClausules, vector<set<int>> cnfGraph);
     
     vector<set<int>> gerateAllMaxIndependentSets();
 private:
-    Parser* parser;
+    int numVariables;
+    int numClausules;
+    vector<set<int>> cnfGraph;
     set<set<int>> queue;
 
     bool isAdjacent(int a, int b);

@@ -17,10 +17,7 @@ Parser::Parser(ifstream* file){
 
     *file >> type >> numVariables >> numClausules;
 
-    cnfGraph.resize(numClausules+1+numVariables*2);
-
     for(int i = 0; i < numClausules; i++){
-        insertIntoCnfGraph(i, numClausules);
         set<int> tmp_s;
         int tmp_i;
         *file >> tmp_i;
@@ -30,18 +27,9 @@ Parser::Parser(ifstream* file){
             *file >> tmp_i;
         }
         if(tmp_s.size() == 1){
-            soloLits.insert(*tmp_s.begin());
+            soloLiterals.insert(*tmp_s.begin());
         }
-        else if(tmp_s.size() == 2){
-            for(auto x : tmp_s){
-                int litPos = getLitPos(x);
-                insertIntoCnfGraph(litPos, numClausules);
-                insertIntoCnfGraph(litPos, i);
-                auto inverserLitPos = cnfGraph[litPos].find(x*-1);
-                if(inverserLitPos != cnfGraph[litPos].end()){
-                    insertIntoCnfGraph(litPos, *inverserLitPos);
-                }
-            }
+        else if(tmp_s.size() == 2){            
             cnfClausules.push_back(tmp_s);
 
             int totalPositive = 0;
@@ -62,27 +50,18 @@ Parser::Parser(ifstream* file){
     setFunctionType();
 }
 
-void Parser::insertIntoCnfGraph(int a, int b){
-    cnfGraph[a].insert(b);
-    cnfGraph[b].insert(a);
-}
-
-int Parser::getLitPos(int lit){
-    return numClausules + (lit < 0 ? (abs(lit)<<1) : (lit<<1) - 1);
-}
-
 void Parser::setFunctionType(){
     if (!cnfClausules.size() && !hornClausules.size()) {
         functionType = SOLO;
         return;
     }
 
-    if (cnfClausules.size() + soloLits.size() == (size_t)numClausules) {
+    if (cnfClausules.size() + soloLiterals.size() == (size_t)numClausules) {
         functionType = CNF;
         return;
     }
 
-    if (hornClausules.size() + soloLits.size() == (size_t)numClausules) {
+    if (hornClausules.size() + soloLiterals.size() == (size_t)numClausules) {
         functionType = HORN;
         return;
     }

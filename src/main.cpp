@@ -29,38 +29,31 @@ int main(int argc, char *argv[]){
     in_file.close();
     
     if (DEBUG) {
-        Utils::printMatrix(parser.cnfGraph, "CNF Graph");
         Utils::printMatrix(parser.cnfClausules, "CNF clausules");
         Utils::printMatrix(parser.hornClausules, "Horn clausules");
-        Utils::printLine(parser.soloLits, "Solo literals");
+        Utils::printLine(parser.soloLiterals, "Solo literals");
         cout << parser.functionType << endl;
     }
 
-    Solver solver = Solver();
+    Solver solver = Solver(&parser);
 
     switch (parser.functionType) {
         case SOLO:
-            solver.solveSolo(parser.soloLits);
+            solver.solveSolo();
             break;
         case CNF:
-            solver.solve2Cnf(parser.numVariables, parser.cnfClausules, parser.soloLits);
+            solver.solve2Cnf();
             break;
         case HORN:
-            solver.solveHorn(parser.numVariables, parser.hornClausules, parser.soloLits);
+            solver.solveHorn();
             break;
         case MHF:
-            //solver.solveMHF();
+            solver.solveMHF();
             break;
         default:
             cout << "Invalid function type" << endl;
             return -3;
     }
-
-    // AllMaxIndependentSetsSolver solver = AllMaxIndependentSetsSolver(&parser);
-
-    // auto matrix = ;
-
-    // Utils::printMatrix(&solver.gerateAllMaxIndependentSets(), "ALL Max Indep Set");
 
     return 0;
 }
