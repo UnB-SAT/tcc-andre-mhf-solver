@@ -45,8 +45,9 @@ int Parser::parse(ifstream* file) {
         else{
             if (totalPositive < 2) {
                 hornClausules.push_back(tmp_s);
-            } 
-            return -1;
+            } else {
+                return -1;
+            }
         }
     }
 

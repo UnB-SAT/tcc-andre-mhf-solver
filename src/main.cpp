@@ -26,10 +26,10 @@ int main(int argc, char *argv[]){
 	}
 
     Parser parser = Parser();
-    auto parseOk = parser.parse(&in_file);
+    auto parseError = parser.parse(&in_file);
     in_file.close();
 
-    if (parseOk) {
+    if (parseError) {
         cout << "Not a MHF" << endl;
         return -3;
     }
