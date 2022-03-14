@@ -7,8 +7,8 @@ using namespace std;
 
 HornSolver::HornSolver(){ }
 
-bool HornSolver::solveHornSat(int numVariables, vector<set<int>> clausules, set<int> initialValues = {}){
-    this->clausules = clausules;
+bool HornSolver::solveHornSat(int numVariables, vector<set<int>> _clausules, set<int> initialValues = {}){
+    clausules = _clausules;
     this->numVariables = numVariables;
 
     for (auto value : initialValues) {
@@ -19,8 +19,10 @@ bool HornSolver::solveHornSat(int numVariables, vector<set<int>> clausules, set<
 
     size_t i = 0;
     while (i < clausules.size()) {
-        if (clausules[i].size() == 1) {
-            setValue(*clausules[i].begin());
+        if (clausules[i].size() == 1 && values.find(i) != values.end()) {
+            if (setValue(*clausules[i].begin())) {
+                return false;
+            }
             i = 0;
         } else {
             i++;
@@ -29,7 +31,9 @@ bool HornSolver::solveHornSat(int numVariables, vector<set<int>> clausules, set<
 
     for (auto c : clausules) {
         if (*c.rend() > 0) {
-            setValue(*c.rend() * -1);
+            if (setValue(*c.rend())) {
+                return false;
+            }
         }
     }
 
@@ -47,10 +51,10 @@ int HornSolver::setValue(int value){
     auto valuePos = values.find(absValue);
     if (valuePos == values.end()) {
         values.insert(pair<int, bool>(absValue, value > 0 ? true : false));
-        for (auto c : clausules) {
-            auto negatePos = c.find(value * -1);
-            if (negatePos != c.end()) {
-                c.erase(negatePos);
+        for (size_t i = 0; i < clausules.size(); i++) {
+            auto negatePos = clausules[i].find(value * -1);
+            if (negatePos != clausules[i].end()) {
+                clausules[i].erase(negatePos);
             }
         }
     } else {
