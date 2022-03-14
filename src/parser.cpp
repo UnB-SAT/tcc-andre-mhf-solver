@@ -43,6 +43,8 @@ Parser::Parser(ifstream* file){
                 }
             }
             cnfClausules.push_back(tmp_s);
+
+            // TODO: 2 clausules could be also Horn
         }
         else{
             hornClausules.push_back(tmp_s);

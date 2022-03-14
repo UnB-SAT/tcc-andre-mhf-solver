@@ -49,7 +49,7 @@ bool TwoCnfSolver::solve_2SAT() {
     return true;
 }
 
-void TwoCnfSolver::print_answer(){
+void TwoCnfSolver::printAnswer(){
     for(size_t i = 0; i < assignment.size(); i++){
         if(assignment[i]){
             cout << i+1 << " ";

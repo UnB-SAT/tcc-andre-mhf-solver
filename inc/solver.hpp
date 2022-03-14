@@ -12,7 +12,7 @@ public:
 
     void solveSolo(set<int> lits);
     void solve2Cnf(int numVariables, vector<set<int>> clausules, set<int> soloLiterals);
-    void solveHorn();
+    void solveHorn(int numVariables, vector<set<int>> clausules, set<int> initialValues);
     void solveMHF();
 };
 

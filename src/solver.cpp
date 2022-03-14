@@ -2,6 +2,7 @@
 #include "solver.hpp"
 #include "utils.hpp"
 #include "twoCnfSolver.hpp"
+#include "hornSolver.hpp"
 
 using namespace std;
 
@@ -47,14 +48,21 @@ void Solver::solve2Cnf(int numVariables, vector<set<int>> clausules, set<int> so
     TwoCnfSolver solver = TwoCnfSolver(nodes, g_cnf, gt_cnf);
     if (solver.solve_2SAT()) {
         cout << "SAT" << endl;
-        solver.print_answer();
+        solver.printAnswer();
     } else {
         cout << "UNSAT" << endl;
     }
 }
 
-void Solver::solveHorn(){
+void Solver::solveHorn(int numVariables, vector<set<int>> clausules, set<int> initialValues = {}){
+    HornSolver solver = HornSolver();
 
+    if (solver.solveHornSat(numVariables, clausules, initialValues)) {
+        cout << "SAT" << endl;
+        solver.printAnswer();
+    } else {
+        cout << "UNSAT" << endl;
+    }
 }
 
 void Solver::solveMHF(){

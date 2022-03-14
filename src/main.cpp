@@ -33,6 +33,7 @@ int main(int argc, char *argv[]){
         Utils::printMatrix(parser.cnfClausules, "CNF clausules");
         Utils::printMatrix(parser.hornClausules, "Horn clausules");
         Utils::printLine(parser.soloLits, "Solo literals");
+        cout << parser.functionType << endl;
     }
 
     Solver solver = Solver();
@@ -45,7 +46,7 @@ int main(int argc, char *argv[]){
             solver.solve2Cnf(parser.numVariables, parser.cnfClausules, parser.soloLits);
             break;
         case HORN:
-            //solver.solveHorn();
+            solver.solveHorn(parser.numVariables, parser.hornClausules, parser.soloLits);
             break;
         case MHF:
             //solver.solveMHF();
