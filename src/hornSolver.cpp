@@ -54,6 +54,9 @@ int HornSolver::setValue(int value){
         for (size_t i = 0; i < clausules.size(); i++) {
             auto negatePos = clausules[i].find(value * -1);
             if (negatePos != clausules[i].end()) {
+                if (clausules[i].size() <= 1) {
+                    return -1;
+                }
                 clausules[i].erase(negatePos);
             }
         }
