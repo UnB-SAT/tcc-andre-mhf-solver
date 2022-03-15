@@ -19,7 +19,7 @@ bool HornSolver::solveHornSat(int numVariables, vector<set<int>> _clausules, set
 
     size_t i = 0;
     while (i < clausules.size()) {
-        if (clausules[i].size() == 1 && values.find(i) != values.end()) {
+        if (clausules[i].size() == 1 && values.find(abs(*clausules[i].begin())) == values.end()) {
             if (setValue(*clausules[i].begin())) {
                 return false;
             }
