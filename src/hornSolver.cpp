@@ -12,9 +12,7 @@ bool HornSolver::solveHornSat(int numVariables, vector<set<int>> _clausules, set
     this->numVariables = numVariables;
 
     for (auto value : initialValues) {
-        if (setValue(value)){
-            return false;
-        }
+        clausules.push_back({value});
     }
 
     size_t i = 0;
@@ -24,23 +22,10 @@ bool HornSolver::solveHornSat(int numVariables, vector<set<int>> _clausules, set
                 return false;
             }
             i = 0;
-        } else {
-            i++;
+            continue;
         }
-    }
 
-    for (auto c : clausules) {
-        if (*c.rbegin() > 0) {
-            if (setValue(*c.rbegin())) {
-                return false;
-            }
-        }
-    }
-
-    for (auto c : clausules) {
-        if (!c.size()) {
-            return false;
-        }
+        i++;
     }
 
     return true;
@@ -60,13 +45,7 @@ int HornSolver::setValue(int value){
                 clausules[i].erase(negatePos);
             }
         }
-    } else {
-        if (valuePos->second == true && value < 0) {
-            return -1;
-        } else if(valuePos->second == false && value > 0) {
-            return -1;
-        }
-    }
+    } 
     return 0;
 }
 

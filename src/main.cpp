@@ -6,8 +6,6 @@
 #include "utils.hpp"
 #include "solver.hpp"
 
-#define DEBUG 1
-
 using namespace std;
 
 int main(int argc, char *argv[]){
@@ -32,14 +30,6 @@ int main(int argc, char *argv[]){
     if (parseError) {
         cout << "Not a MHF" << endl;
         return -3;
-    }
-    
-    if (DEBUG) {
-        Utils::printMatrix(parser.cnfClausules, "CNF clausules");
-        Utils::printMatrix(parser.hornClausules, "Horn clausules");
-        Utils::printLine(parser.soloLiterals, "Solo literals");
-        cout << "Type" << endl << parser.functionType << endl;
-        cout << "Solution" << endl;
     }
 
     Solver solver = Solver(&parser);
