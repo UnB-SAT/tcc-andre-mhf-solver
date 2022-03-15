@@ -2,7 +2,9 @@
 #include "utils.hpp"
 
 void Utils::printMatrix(vector<set<int>> matrix, string title){
-    cout << title << endl;
+    if (title.size()) {
+        cout << title << endl;
+    }
     for(size_t i = 0; i < matrix.size(); i++){
         cout << i << ": ";
         for(auto j : matrix[i]){
