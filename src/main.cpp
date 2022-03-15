@@ -38,7 +38,8 @@ int main(int argc, char *argv[]){
         Utils::printMatrix(parser.cnfClausules, "CNF clausules");
         Utils::printMatrix(parser.hornClausules, "Horn clausules");
         Utils::printLine(parser.soloLiterals, "Solo literals");
-        cout << parser.functionType << endl;
+        cout << "Type" << endl << parser.functionType << endl;
+        cout << "Solution" << endl;
     }
 
     Solver solver = Solver(&parser);

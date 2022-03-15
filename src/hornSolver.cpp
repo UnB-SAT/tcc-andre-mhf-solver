@@ -30,8 +30,8 @@ bool HornSolver::solveHornSat(int numVariables, vector<set<int>> _clausules, set
     }
 
     for (auto c : clausules) {
-        if (*c.rend() > 0) {
-            if (setValue(*c.rend())) {
+        if (*c.rbegin() > 0) {
+            if (setValue(*c.rbegin())) {
                 return false;
             }
         }
