@@ -24,7 +24,7 @@ int Parser::parse(ifstream* file) {
         int tmp_i;
         *file >> tmp_i;
         tmp_s.insert(tmp_i);
-        int totalPositive = 0;
+        int totalPositive = tmp_i > 0 ? 1 : 0;
         while(tmp_i){
             tmp_s.insert(tmp_i);
             *file >> tmp_i;
@@ -35,7 +35,7 @@ int Parser::parse(ifstream* file) {
         if(tmp_s.size() == 1){
             soloLiterals.insert(*tmp_s.begin());
         }
-        else if(tmp_s.size() == 2){            
+        else if(tmp_s.size() == 2){     
             cnfClausules.push_back(tmp_s);
 
             if (totalPositive < 2) {

@@ -69,6 +69,45 @@ void Solver::solveHorn(){
 }
 
 void Solver::solveMHF(){
+    // TODO arrumar duplicação de código
+    int nodes = parser->numVariables*2+2;
+    vector<vector<int>> g_cnf(nodes), gt_cnf(nodes);
+
+    for (auto lit : parser->soloLiterals) {
+        int pos = lit < 0 ? (abs(lit) << 1 ) + 1 : abs(lit) << 1;
+        g_cnf[pos ^ 1].push_back(pos);
+        gt_cnf[pos].push_back(pos ^ 1);
+    }
+
+    for (auto clausule : parser->cnfClausules) {
+        vector<int> literals;
+        for (auto lit : clausule) {
+            literals.push_back(lit);
+        }
+
+        int pos1 = literals[0] < 0 ? (abs(literals[0]) << 1 ) + 1 : abs(literals[0]) << 1;
+        int pos2 = literals[1] < 0 ? (abs(literals[1]) << 1 ) + 1 : abs(literals[1]) << 1;
+
+        g_cnf[pos1 ^ 1].push_back(pos2);
+        g_cnf[pos2 ^ 1].push_back(pos1);
+
+        gt_cnf[pos2].push_back(pos1 ^ 1);
+        gt_cnf[pos1].push_back(pos2 ^ 1);
+    }
+
+    TwoCnfSolver _twoCnfSolver = TwoCnfSolver(nodes, g_cnf, gt_cnf);
+    if (!_twoCnfSolver.solve_2SAT()) {
+        cout << "UNSAT" << endl;
+        return;
+    }
+
+    HornSolver _hornSolver = HornSolver();
+
+    if (!_hornSolver.solveHornSat(parser->numVariables, parser->hornClausules, parser->soloLiterals)) {
+        cout << "UNSAT" << endl;
+        return;
+    }
+
     vector<set<int>> cnfGraph;
     cnfGraph.resize(parser->numClausules+1+parser->numVariables*2);
 
@@ -86,14 +125,21 @@ void Solver::solveMHF(){
         }
     }
 
-    AllMaxIndependentSetsSolver MISSolver = AllMaxIndependentSetsSolver(parser->numVariables, parser->numClausules, cnfGraph);
+    AllMaxIndependentSetsSolver MISSolver = AllMaxIndependentSetsSolver(parser->numVariables, parser->cnfClausules.size(), cnfGraph);
+    // TODO pegar 1 testar antes de pegar o proximo
     auto tests = MISSolver.gerateAllMaxIndependentSets();
 
     for (auto test : tests) {
         HornSolver hornSolver = HornSolver();
+
+        for (auto x : parser->soloLiterals) {
+            test.insert(x);
+        }
+
         if (hornSolver.solveHornSat(parser->numVariables, parser->hornClausules, test)) {
             cout << "SAT" << endl;
             hornSolver.printAnswer();
+            return;
         }
     }
         

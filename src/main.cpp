@@ -8,6 +8,19 @@
 
 using namespace std;
 
+// Repo de formular pegar 3 de cada dominio (começo meio fim)
+// Impar -> unsat
+// Par -> sat
+
+// Colocar timelimit -> signals
+
+// Arrumar retornos
+// SAT -> 20
+// UNSAT -> 10
+// UNKNOW -> 0
+
+// Colocar saida padrao o site
+
 int main(int argc, char *argv[]){
     if(argc < 2){
         cout << "Invalid args" << endl;

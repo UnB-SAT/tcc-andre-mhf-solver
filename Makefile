@@ -1,5 +1,5 @@
 CC := g++
-CFLAGS := -Wall
+CFLAGS := -Wall -O2
 
 SRCFILES := $(wildcard src/*.cpp)
 

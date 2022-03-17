@@ -11,6 +11,7 @@ AllMaxIndependentSetsSolver::AllMaxIndependentSetsSolver(int numVariables, int n
 vector<set<int>> AllMaxIndependentSetsSolver::gerateAllMaxIndependentSets(){
     vector<set<int>> maxIdenpendentSets;
     set<int> tmp_next;
+    // TODO testar começando com {A}
     for(int i = 0; i < numClausules; i++){
         tmp_next.insert(i);
     }
@@ -61,10 +62,10 @@ bool AllMaxIndependentSetsSolver::isAdjacent(int a, int b){
 bool AllMaxIndependentSetsSolver::isMaximal(set<int> potentialSet){
     set<int> visibleClausules;
     for(auto x : potentialSet){
-        if (x <= numClausules) {
+        if (x < numClausules) {
             visibleClausules.insert(x);
         }
-        else {
+        else if (x > numClausules) {
             for(auto y : cnfGraph[x]){
                 if(y < numClausules){
                     visibleClausules.insert(y);
