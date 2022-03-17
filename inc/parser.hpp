@@ -6,6 +6,10 @@
 #define HORN 2
 #define MHF 3
 
+#define SAT 20
+#define UNSAT 10
+#define UNKNOW 0
+
 #include <fstream>
 #include <vector>
 #include <set>

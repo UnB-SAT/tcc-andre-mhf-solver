@@ -1,10 +1,14 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <signal.h>
+#include <unistd.h>
 #include "parser.hpp"
 #include "allMaxIndepSets.hpp"
 #include "utils.hpp"
 #include "solver.hpp"
+
+#define ALARMTIME 60*30
 
 using namespace std;
 
@@ -12,14 +16,14 @@ using namespace std;
 // Impar -> unsat
 // Par -> sat
 
-// Colocar timelimit -> signals
-
-// Arrumar retornos
-// SAT -> 20
-// UNSAT -> 10
-// UNKNOW -> 0
-
 // Colocar saida padrao o site
+
+void sigAlarmHandler(int sigNum){
+    if (sigNum == SIGALRM) {
+        cout << "UNKNOW" << endl;
+        exit(UNKNOW);
+    }
+}
 
 int main(int argc, char *argv[]){
     if(argc < 2){
@@ -44,6 +48,9 @@ int main(int argc, char *argv[]){
         cout << "Not a MHF" << endl;
         return -3;
     }
+
+    signal(SIGALRM, sigAlarmHandler);
+    alarm(ALARMTIME);
 
     Solver solver = Solver(&parser);
 
