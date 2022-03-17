@@ -6,3 +6,4 @@ trash/
 bin/
 obj/
 a.cpp
+benchmarks/
