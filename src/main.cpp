@@ -3,6 +3,8 @@
 #include <fstream>
 #include <signal.h>
 #include <unistd.h>
+#include <cstdlib>
+#include <iomanip>
 #include "parser.hpp"
 #include "allMaxIndepSets.hpp"
 #include "utils.hpp"
@@ -11,6 +13,8 @@
 #define ALARMTIME 60*30
 
 using namespace std;
+
+clock_t start;
 
 // Repo de formular pegar 3 de cada dominio (começo meio fim)
 // Impar -> unsat
@@ -23,7 +27,18 @@ void sigAlarmHandler(int sigNum){
     }
 }
 
+void beforeExit() {
+    cout << fixed << setprecision(5) << "c time " << ((double)(clock() - start)/CLOCKS_PER_SEC) << endl;
+}
+
 int main(int argc, char *argv[]){
+    start = clock();
+
+    atexit(beforeExit);
+
+    signal(SIGALRM, sigAlarmHandler);
+    alarm(ALARMTIME);
+
     if(argc < 2){
         cout << "Invalid args" << endl;
         cout << "Usage: " << argv[0] << " mhf_file_path" << endl;
@@ -46,9 +61,6 @@ int main(int argc, char *argv[]){
         cout << "Not a MHF" << endl;
         return -3;
     }
-
-    signal(SIGALRM, sigAlarmHandler);
-    alarm(ALARMTIME);
 
     Solver solver = Solver(&parser);
 
