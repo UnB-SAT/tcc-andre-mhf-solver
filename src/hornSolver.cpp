@@ -50,6 +50,7 @@ int HornSolver::setValue(int value){
 }
 
 void HornSolver::printAnswer() {
+    cout << "v ";
     for (auto i = 1; i <= numVariables; i++) {
         auto valuePos = values.find(i);
         if (valuePos != values.end()) {
@@ -60,5 +61,5 @@ void HornSolver::printAnswer() {
         }
         cout << (i * -1) << " ";
     }
-    cout << endl;
+    cout << 0 << endl;
 }

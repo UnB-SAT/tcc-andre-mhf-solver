@@ -14,12 +14,14 @@ Solver::Solver(Parser* parser){
 void Solver::solveSolo(){
     for (auto lit : parser->soloLiterals) {
         if (parser->soloLiterals.find(lit * -1) != parser->soloLiterals.end()) {
-            cout << "UNSAT" << endl;
+            cout << "s UNSATISFIABLE" << endl;
             exit(UNSAT);
         }
     }
 
-    Utils::printLine(parser->soloLiterals, "SAT");
+    cout << "v ";
+    Utils::printLine(parser->soloLiterals, "s SATISFIABLE");
+    cout << 0 << endl;
     exit(SAT);
 }
 
@@ -51,11 +53,11 @@ void Solver::solve2Cnf(){
 
     TwoCnfSolver solver = TwoCnfSolver(nodes, g_cnf, gt_cnf);
     if (solver.solve_2SAT()) {
-        cout << "SAT" << endl;
+        cout << "s SATISFIABLE" << endl;
         solver.printAnswer();
         exit(SAT);
     } else {
-        cout << "UNSAT" << endl;
+        cout << "s UNSATISFIABLE" << endl;
         exit(UNSAT);
     }
 }
@@ -64,11 +66,11 @@ void Solver::solveHorn(){
     HornSolver solver = HornSolver();
 
     if (solver.solveHornSat(parser->numVariables, parser->hornClausules, parser->soloLiterals)) {
-        cout << "SAT" << endl;
+        cout << "s SATISFIABLE" << endl;
         solver.printAnswer();
         exit(SAT);
     } else {
-        cout << "UNSAT" << endl;
+        cout << "s UNSATISFIABLE" << endl;
         exit(UNSAT);
     }
 }
@@ -102,14 +104,14 @@ void Solver::solveMHF(){
 
     TwoCnfSolver _twoCnfSolver = TwoCnfSolver(nodes, g_cnf, gt_cnf);
     if (!_twoCnfSolver.solve_2SAT()) {
-        cout << "UNSAT" << endl;
+        cout << "s UNSATISFIABLE" << endl;
         exit(UNSAT);
     }
 
     HornSolver _hornSolver = HornSolver();
 
     if (!_hornSolver.solveHornSat(parser->numVariables, parser->hornClausules, parser->soloLiterals)) {
-        cout << "UNSAT" << endl;
+        cout << "s UNSATISFIABLE" << endl;
         exit(UNSAT);
     }
 
@@ -142,13 +144,13 @@ void Solver::solveMHF(){
         }
 
         if (hornSolver.solveHornSat(parser->numVariables, parser->hornClausules, test)) {
-            cout << "SAT" << endl;
+            cout << "s SATISFIABLE" << endl;
             hornSolver.printAnswer();
             exit(SAT);
         }
     }
         
-    cout << "UNSAT" << endl;
+    cout << "s UNSATISFIABLE" << endl;
     exit(UNSAT);
 }
 

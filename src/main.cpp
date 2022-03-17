@@ -16,8 +16,6 @@ using namespace std;
 // Impar -> unsat
 // Par -> sat
 
-// Colocar saida padrao o site
-
 void sigAlarmHandler(int sigNum){
     if (sigNum == SIGALRM) {
         cout << "UNKNOW" << endl;

@@ -50,6 +50,7 @@ bool TwoCnfSolver::solve_2SAT() {
 }
 
 void TwoCnfSolver::printAnswer(){
+    cout << "v ";
     for(size_t i = 0; i < assignment.size(); i++){
         if(assignment[i]){
             cout << i+1 << " ";
@@ -58,5 +59,5 @@ void TwoCnfSolver::printAnswer(){
             cout << -(i+1) << " ";
         }
     }
-    cout << endl;
+    cout << 0 << endl;
 }
