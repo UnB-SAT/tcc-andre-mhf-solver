@@ -22,7 +22,7 @@ clock_t start;
 
 void sigAlarmHandler(int sigNum){
     if (sigNum == SIGALRM) {
-        cout << "UNKNOW" << endl;
+        cout << "s UNKNOW" << endl;
         exit(UNKNOW);
     }
 }
