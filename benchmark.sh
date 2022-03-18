@@ -7,6 +7,7 @@ totalTests=1;
 testFileName="./test.cnf";
 logFileName="./log.csv";
 
+# Create a blank log
 touch $logFileName;
 > $logFileName;
 echo "File path, Clasp runtime, Solver runtime, Clasp return, Solver return, Clasp new return" >> $logFileName;
@@ -32,6 +33,7 @@ do
     } &> /dev/null;
     solverEndTime=$(date +%s.%N);
 
+    # Check fileOutput if SAT
     if [ $solverReturn = $claspReturn ] && [$solverReturn = $satValue];
     then
         {
@@ -42,5 +44,6 @@ do
         claspNewReturn="";
     fi
 
+    # Add to log
     echo "$file, $( echo "$claspEndTime - $claspStartTime" | bc -l ), $( echo "$solverEndTime - $claspEndTime" | bc -l ), $claspReturn, $solverReturn, $claspNewReturn" >> $logFileName;
 done

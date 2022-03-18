@@ -11,7 +11,7 @@ AllMaxIndependentSetsSolver::AllMaxIndependentSetsSolver(int numVariables, int n
 vector<set<int>> AllMaxIndependentSetsSolver::gerateAllMaxIndependentSets(){
     vector<set<int>> maxIdenpendentSets;
     set<int> tmp_next;
-    // TODO testar começando com {A}
+    // TODO maybe start with special vertex
     for(int i = 0; i < numClausules; i++){
         tmp_next.insert(i);
     }

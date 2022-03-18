@@ -16,10 +16,6 @@ using namespace std;
 clock_t startTime;
 clock_t endTime;
 
-// Repo de formular pegar 3 de cada dominio (começo meio fim)
-// Impar -> unsat
-// Par -> sat
-
 void sigAlarmHandler(int sigNum){
     if (sigNum == SIGALRM) {
         cout << "s UNKNOW" << endl;

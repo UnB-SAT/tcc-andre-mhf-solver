@@ -73,7 +73,7 @@ void Solver::solveHorn(){
 }
 
 void Solver::solveMHF(){
-    // TODO arrumar duplicação de código
+    // TODO fix duplications
     int nodes = parser->numVariables*2+2;
     vector<vector<int>> g_cnf(nodes), gt_cnf(nodes);
 
@@ -130,7 +130,7 @@ void Solver::solveMHF(){
     }
 
     AllMaxIndependentSetsSolver MISSolver = AllMaxIndependentSetsSolver(parser->numVariables, parser->cnfClausules.size(), cnfGraph);
-    // TODO pegar 1 testar antes de pegar o proximo
+    // TODO get one by one and test value
     auto tests = MISSolver.gerateAllMaxIndependentSets();
 
     for (auto test : tests) {
