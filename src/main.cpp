@@ -5,12 +5,11 @@
 #include <unistd.h>
 #include <cstdlib>
 #include <iomanip>
+#include <string>
 #include "parser.hpp"
 #include "allMaxIndepSets.hpp"
 #include "utils.hpp"
 #include "solver.hpp"
-
-#define ALARMTIME 60*30
 
 using namespace std;
 
@@ -34,16 +33,16 @@ void beforeExit() {
 }
 
 int main(int argc, char *argv[]){
+    if(argc < 4){
+        cout << "Invalid args" << endl;
+        cout << "Usage: " << argv[0] << " mhf_file_path time_limit output_variable_name" << endl;
+        return -1;
+    }
+
     atexit(beforeExit);
 
     signal(SIGALRM, sigAlarmHandler);
-    alarm(ALARMTIME);
-
-    if(argc < 2){
-        cout << "Invalid args" << endl;
-        cout << "Usage: " << argv[0] << " mhf_file_path" << endl;
-        return -1;
-    }
+    alarm(atoi(argv[2]));
 
     startTime = clock();
 
@@ -91,7 +90,7 @@ int main(int argc, char *argv[]){
         }
         cout << "0" << endl;
         endTime = clock();
-        solver.generateNewFormula(startTime, endTime);
+        solver.generateNewFormula(startTime, endTime, argv[3]);
     } else {
         endTime = clock();
     }

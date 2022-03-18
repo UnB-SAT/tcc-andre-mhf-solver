@@ -8,3 +8,7 @@ obj/
 a.cpp
 benchmarks/
 last-output-with-forced-variables.cnf
+test.cnf
+log
+log.txt
+log.csv

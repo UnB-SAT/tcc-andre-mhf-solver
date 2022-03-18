@@ -159,9 +159,9 @@ int Solver::getLitPos(int lit){
     return parser->numClausules + (lit < 0 ? (abs(lit)<<1) : (lit<<1) - 1);
 }
 
-void Solver::generateNewFormula(clock_t startTime, clock_t endTime) {
+void Solver::generateNewFormula(clock_t startTime, clock_t endTime, string fileName) {
     ofstream outputFile;
-    outputFile.open ("last-output-with-forced-variables.cnf", ofstream::trunc);
+    outputFile.open (fileName, ofstream::trunc);
     outputFile << fixed << setprecision(5) << "c time " << ((double)(endTime - startTime)/CLOCKS_PER_SEC) << endl;
     int totalClausules = parser->soloLiterals.size() + parser->hornClausules.size() + parser->cnfClausules.size() + answer.size();
     outputFile << "p cnf " << parser->numVariables << " " << totalClausules << endl;
