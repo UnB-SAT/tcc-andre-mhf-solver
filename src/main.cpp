@@ -14,7 +14,8 @@
 
 using namespace std;
 
-clock_t start;
+clock_t startTime;
+clock_t endTime;
 
 // Repo de formular pegar 3 de cada dominio (começo meio fim)
 // Impar -> unsat
@@ -23,12 +24,13 @@ clock_t start;
 void sigAlarmHandler(int sigNum){
     if (sigNum == SIGALRM) {
         cout << "s UNKNOW" << endl;
+        endTime = clock();
         exit(UNKNOW);
     }
 }
 
 void beforeExit() {
-    cout << fixed << setprecision(5) << "c time " << ((double)(clock() - start)/CLOCKS_PER_SEC) << endl;
+    cout << fixed << setprecision(5) << "c time " << ((double)(endTime - startTime)/CLOCKS_PER_SEC) << endl;
 }
 
 int main(int argc, char *argv[]){
@@ -43,7 +45,7 @@ int main(int argc, char *argv[]){
         return -1;
     }
 
-    start = clock();
+    startTime = clock();
 
     ifstream in_file;
     in_file.open(argv[1], ios::in);
@@ -88,8 +90,11 @@ int main(int argc, char *argv[]){
             cout << v << " ";
         }
         cout << "0" << endl;
+        endTime = clock();
+        solver.generateNewFormula();
+    } else {
+        endTime = clock();
     }
 
-
-    return solver.returnValue;
+    exit(solver.returnValue);
 }

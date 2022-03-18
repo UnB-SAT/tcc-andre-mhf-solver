@@ -18,6 +18,8 @@ public:
     void solve2Cnf();
     void solveHorn();
     void solveMHF();
+
+    void generateNewFormula();
 private:
     Parser* parser;
 

@@ -157,3 +157,29 @@ void Solver::insertIntoGraph(vector<set<int>>* graph, int a, int b){
 int Solver::getLitPos(int lit){
     return parser->numClausules + (lit < 0 ? (abs(lit)<<1) : (lit<<1) - 1);
 }
+
+void Solver::generateNewFormula() {
+    ofstream outputFile;
+    outputFile.open ("last-output-with-forced-variables.cnf", ofstream::trunc);
+    int totalClausules = parser->soloLiterals.size() + parser->hornClausules.size() + parser->cnfClausules.size() + answer.size();
+    outputFile << "p cnf " << parser->numVariables << " " << totalClausules << endl;
+    for (auto c : parser->cnfClausules) {
+        for (auto l : c) {
+            outputFile << l << " ";
+        }
+        outputFile << 0 << endl;
+    }
+    for (auto c : parser->hornClausules) {
+        for (auto l : c) {
+            outputFile << l << " ";
+        }
+        outputFile << 0 << endl;
+    }
+    for (auto l : parser->soloLiterals) {
+        outputFile << l << " 0" << endl;
+    }
+    for (auto l : answer) {
+        outputFile << l << " 0" << endl;
+    }
+}
+
