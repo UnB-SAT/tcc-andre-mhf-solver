@@ -19,7 +19,7 @@ public:
     void solveHorn();
     void solveMHF();
 
-    void generateNewFormula();
+    void generateNewFormula(clock_t startTime, clock_t endTime);
 private:
     Parser* parser;
 

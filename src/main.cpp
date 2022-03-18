@@ -91,7 +91,7 @@ int main(int argc, char *argv[]){
         }
         cout << "0" << endl;
         endTime = clock();
-        solver.generateNewFormula();
+        solver.generateNewFormula(startTime, endTime);
     } else {
         endTime = clock();
     }
