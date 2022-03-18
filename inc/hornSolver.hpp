@@ -12,7 +12,7 @@ public:
     HornSolver();
 
     bool solveHornSat(int numVariables, vector<set<int>> clausules, set<int> initialValues);
-    void printAnswer();
+    vector<int> getAnswer();
 private:
     map<int, bool> values;
     int numVariables;

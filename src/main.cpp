@@ -32,8 +32,6 @@ void beforeExit() {
 }
 
 int main(int argc, char *argv[]){
-    start = clock();
-
     atexit(beforeExit);
 
     signal(SIGALRM, sigAlarmHandler);
@@ -44,6 +42,8 @@ int main(int argc, char *argv[]){
         cout << "Usage: " << argv[0] << " mhf_file_path" << endl;
         return -1;
     }
+
+    start = clock();
 
     ifstream in_file;
     in_file.open(argv[1], ios::in);
@@ -82,5 +82,14 @@ int main(int argc, char *argv[]){
             return -4;
     }
 
-    return 0;
+    if (solver.returnValue == SAT) {
+        cout << "v ";
+        for (auto v : solver.answer) {
+            cout << v << " ";
+        }
+        cout << "0" << endl;
+    }
+
+
+    return solver.returnValue;
 }

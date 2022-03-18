@@ -14,15 +14,15 @@ Solver::Solver(Parser* parser){
 void Solver::solveSolo(){
     for (auto lit : parser->soloLiterals) {
         if (parser->soloLiterals.find(lit * -1) != parser->soloLiterals.end()) {
-            cout << "s UNSATISFIABLE" << endl;
-            exit(UNSAT);
+            returnValue = UNSAT;
+            return;
         }
     }
 
-    cout << "v ";
-    Utils::printLine(parser->soloLiterals, "s SATISFIABLE");
-    cout << 0 << endl;
-    exit(SAT);
+    returnValue = SAT;
+    for (auto lit : parser->soloLiterals) {
+        answer.push_back(lit);
+    }
 }
 
 void Solver::solve2Cnf(){
@@ -53,12 +53,10 @@ void Solver::solve2Cnf(){
 
     TwoCnfSolver solver = TwoCnfSolver(nodes, g_cnf, gt_cnf);
     if (solver.solve_2SAT()) {
-        cout << "s SATISFIABLE" << endl;
-        solver.printAnswer();
-        exit(SAT);
+        returnValue = SAT;
+        answer = solver.getAnswer();
     } else {
-        cout << "s UNSATISFIABLE" << endl;
-        exit(UNSAT);
+        returnValue = UNSAT;
     }
 }
 
@@ -66,12 +64,10 @@ void Solver::solveHorn(){
     HornSolver solver = HornSolver();
 
     if (solver.solveHornSat(parser->numVariables, parser->hornClausules, parser->soloLiterals)) {
-        cout << "s SATISFIABLE" << endl;
-        solver.printAnswer();
-        exit(SAT);
+        returnValue = SAT;
+        answer = solver.getAnswer();
     } else {
-        cout << "s UNSATISFIABLE" << endl;
-        exit(UNSAT);
+        returnValue = UNSAT;
     }
 }
 
@@ -104,15 +100,15 @@ void Solver::solveMHF(){
 
     TwoCnfSolver _twoCnfSolver = TwoCnfSolver(nodes, g_cnf, gt_cnf);
     if (!_twoCnfSolver.solve_2SAT()) {
-        cout << "s UNSATISFIABLE" << endl;
-        exit(UNSAT);
+        returnValue = UNSAT;
+        return;
     }
 
     HornSolver _hornSolver = HornSolver();
 
     if (!_hornSolver.solveHornSat(parser->numVariables, parser->hornClausules, parser->soloLiterals)) {
-        cout << "s UNSATISFIABLE" << endl;
-        exit(UNSAT);
+        returnValue = UNSAT;
+        return;
     }
 
     vector<set<int>> cnfGraph;
@@ -144,14 +140,13 @@ void Solver::solveMHF(){
         }
 
         if (hornSolver.solveHornSat(parser->numVariables, parser->hornClausules, test)) {
-            cout << "s SATISFIABLE" << endl;
-            hornSolver.printAnswer();
-            exit(SAT);
+            returnValue = SAT;
+            answer = hornSolver.getAnswer();
+            return;
         }
     }
         
-    cout << "s UNSATISFIABLE" << endl;
-    exit(UNSAT);
+    returnValue = UNSAT;
 }
 
 void Solver::insertIntoGraph(vector<set<int>>* graph, int a, int b){

@@ -14,7 +14,7 @@ class TwoCnfSolver{
     public:
         TwoCnfSolver(int n, vector<vector<int>> g, vector<vector<int>> gt);
         bool solve_2SAT();
-        void printAnswer();
+        vector<int> getAnswer();
 
     private:
         void dfs1(int v);

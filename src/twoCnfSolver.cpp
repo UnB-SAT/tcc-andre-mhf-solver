@@ -49,15 +49,15 @@ bool TwoCnfSolver::solve_2SAT() {
     return true;
 }
 
-void TwoCnfSolver::printAnswer(){
-    cout << "v ";
+vector<int> TwoCnfSolver::getAnswer(){
+    vector<int> answer;
     for(size_t i = 0; i < assignment.size(); i++){
         if(assignment[i]){
-            cout << i+1 << " ";
+            answer.push_back(i+1);
         }
         else{
-            cout << -(i+1) << " ";
+            answer.push_back(-(i+1));
         }
     }
-    cout << 0 << endl;
+    return answer;
 }

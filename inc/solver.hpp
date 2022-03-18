@@ -11,6 +11,9 @@ class Solver{
 public:
     Solver(Parser* parser);
 
+    int returnValue;
+    vector<int> answer;
+
     void solveSolo();
     void solve2Cnf();
     void solveHorn();

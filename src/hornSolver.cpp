@@ -49,17 +49,17 @@ int HornSolver::setValue(int value){
     return 0;
 }
 
-void HornSolver::printAnswer() {
-    cout << "v ";
+vector<int> HornSolver::getAnswer() {
+    vector<int> answer;
     for (auto i = 1; i <= numVariables; i++) {
         auto valuePos = values.find(i);
         if (valuePos != values.end()) {
             if (valuePos->second) {
-                cout << i << " ";
+                answer.push_back(i);
                 continue;
             }
         }
-        cout << (i * -1) << " ";
+        answer.push_back(i * -1);
     }
-    cout << 0 << endl;
+    return answer;
 }
