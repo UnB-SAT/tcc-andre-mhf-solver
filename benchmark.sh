@@ -24,19 +24,19 @@ do
     {
         clasp $testFileName --time-limit=$timeLimit;
         claspReturn=$?;
-    } &> $testDir/clasp;
+    } &> $testDir/clasp.txt;
     
     # Run solver
     {
         ./prog $testFileName $timeLimit $outputVariableName;
         solverReturn=$?;
-    } &> $testDir/solver;
+    } &> $testDir/solver.txt;
 
     # Crosscheck if SAT
     if [ $solverReturn = $claspReturn ] && [$solverReturn = $satValue];
     then
         {
             clasp $outputVariableName --time-limit=$timeLimit;
-        } &> $testDir/crossCheck;
+        } &> $testDir/crossCheck.txt;
     fi
 done
