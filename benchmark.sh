@@ -1,49 +1,42 @@
 #!/bin/bash
 
 satValue=20;
-timeLimit=5;
+timeLimit=3;
+totalTests=3;
+fileType=".cnf.zst";
 outputVariableName="./solverOutput.cnf";
-totalTests=1;
 testFileName="./test.cnf";
-logFileName="./log.csv";
+outputDir="./output";
 
-# Create a blank log
-touch $logFileName;
-> $logFileName;
-echo "File path, Clasp runtime, Solver runtime, Clasp return, Solver return, Clasp new return" >> $logFileName;
+# New output everytime
+rm -rf $outputDir;
+mkdir $outputDir;
 
 # Get all tests sorted with maximum of totalTests
-for file in $(find "./" -name "*cnf.zst" |sort -R |tail -$totalTests);
+for file in $(find "./" -name "*$fileType" |sort -R |tail -$totalTests);
 do
+    testDir=$outputDir/$(basename $file $fileType);
+    mkdir $testDir;
     # Unpack
     zstd -d $file -o $testFileName -f &> /dev/null;
 
     # Run clasp
-    claspStartTime=$(date +%s.%N);
     {
         clasp $testFileName --time-limit=$timeLimit;
         claspReturn=$?;
-    } &> /dev/null;
-    claspEndTime=$(date +%s.%N);
+    } &> $testDir/clasp;
     
     # Run solver
     {
         ./prog $testFileName $timeLimit $outputVariableName;
         solverReturn=$?;
-    } &> /dev/null;
-    solverEndTime=$(date +%s.%N);
+    } &> $testDir/solver;
 
-    # Check fileOutput if SAT
+    # Crosscheck if SAT
     if [ $solverReturn = $claspReturn ] && [$solverReturn = $satValue];
     then
         {
             clasp $outputVariableName --time-limit=$timeLimit;
-            claspNewReturn=$?;
-        } &> /dev/null;
-    else
-        claspNewReturn="";
+        } &> $testDir/crossCheck;
     fi
-
-    # Add to log
-    echo "$file, $( echo "$claspEndTime - $claspStartTime" | bc -l ), $( echo "$solverEndTime - $claspEndTime" | bc -l ), $claspReturn, $solverReturn, $claspNewReturn" >> $logFileName;
 done
