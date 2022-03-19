@@ -131,9 +131,9 @@ void Solver::solveMHF(){
 
     AllMaxIndependentSetsSolver MISSolver = AllMaxIndependentSetsSolver(parser->numVariables, parser->cnfClausules.size(), cnfGraph);
     // TODO get one by one and test value
-    auto tests = MISSolver.gerateAllMaxIndependentSets();
+    auto test = MISSolver.gerateAllMaxIndependentSets();
 
-    for (auto test : tests) {
+    while (test.size()) {
         HornSolver hornSolver = HornSolver();
 
         for (auto x : parser->soloLiterals) {
@@ -145,6 +145,9 @@ void Solver::solveMHF(){
             answer = hornSolver.getAnswer();
             return;
         }
+
+        test.clear();
+        test = MISSolver.gerateAllMaxIndependentSets();
     }
         
     returnValue = UNSAT;

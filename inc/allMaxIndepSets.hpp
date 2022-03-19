@@ -12,7 +12,7 @@ class AllMaxIndependentSetsSolver{
 public:
     AllMaxIndependentSetsSolver(int numVariables, int numClausules, vector<set<int>> cnfGraph);
     
-    vector<set<int>> gerateAllMaxIndependentSets();
+    set<int> gerateAllMaxIndependentSets();
 private:
     int numVariables;
     int numClausules;

@@ -6,21 +6,18 @@ AllMaxIndependentSetsSolver::AllMaxIndependentSetsSolver(int numVariables, int n
     this->numClausules = numClausules;
     this->numVariables = numVariables;
     this->cnfGraph = cnfGraph;
-}
 
-vector<set<int>> AllMaxIndependentSetsSolver::gerateAllMaxIndependentSets(){
-    vector<set<int>> maxIdenpendentSets;
     set<int> tmp_next;
     // TODO maybe start with special vertex
     for(int i = 0; i < numClausules; i++){
         tmp_next.insert(i);
     }
     queue.insert(tmp_next);
+}
+
+set<int> AllMaxIndependentSetsSolver::gerateAllMaxIndependentSets(){
     while(!queue.empty()){
         auto tmp_s = *queue.begin();
-        if (*tmp_s.begin() > numClausules) {
-            maxIdenpendentSets.push_back(tmp_s);
-        }
         for(size_t j = 0; j < cnfGraph.size(); j++){
             for(auto i : tmp_s){
                 if(isAdjacent(i,j) && (size_t)i < j){
@@ -51,8 +48,11 @@ vector<set<int>> AllMaxIndependentSetsSolver::gerateAllMaxIndependentSets(){
             }
         }
         queue.erase(queue.begin());
+        if (*tmp_s.begin() > numClausules) {
+            return tmp_s;
+        }
     }
-    return maxIdenpendentSets;
+    return {};
 }
 
 bool AllMaxIndependentSetsSolver::isAdjacent(int a, int b){

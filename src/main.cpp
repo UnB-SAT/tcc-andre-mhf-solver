@@ -80,6 +80,7 @@ int main(int argc, char *argv[]){
     }
 
     if (solver.returnValue == SAT) {
+        cout << "s SATISFIABLE" << endl;
         cout << "v ";
         for (auto v : solver.answer) {
             cout << v << " ";
@@ -88,6 +89,7 @@ int main(int argc, char *argv[]){
         endTime = clock();
         solver.generateNewFormula(startTime, endTime, argv[3]);
     } else {
+        cout << "s UNSATISFIABLE" << endl;
         endTime = clock();
     }
 
