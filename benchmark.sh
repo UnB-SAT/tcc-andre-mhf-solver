@@ -14,9 +14,15 @@ mkdir $outputDir;
 
 # Get all tests sorted with maximum of totalTests
 for file in $(find "./" -name "*$fileType" |sort -R |tail -$totalTests);
-do
-    testDir=$outputDir/$(basename $file $fileType);
+do 
+    testName=${file/"./benchmarks/"/""};
+    testName=${testName/".pddl/"/"-"};
+    testName=${testName//"/"/"-"};
+    testName=${testName/"$fileType"/""};
+
+    testDir=$outputDir/$testName;
     mkdir $testDir;
+
     # Unpack
     zstd -d $file -o $testFileName -f &> /dev/null;
 
