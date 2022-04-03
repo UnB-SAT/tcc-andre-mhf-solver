@@ -12,6 +12,8 @@ outputDir="./output";
 rm -rf $outputDir;
 mkdir $outputDir;
 
+# TODO get fixed formulas - (1s - 1m - 10m - 20m - 30m+)
+# TODO get tests for clasp, linge ling, glucose --limit 30m
 # Get all tests sorted with maximum of totalTests
 for file in $(find "./" -name "*$fileType" |sort -R |tail -$totalTests);
 do 
