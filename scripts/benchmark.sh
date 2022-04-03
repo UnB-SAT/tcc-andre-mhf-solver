@@ -2,7 +2,7 @@
 
 timeLimit=1800;
 
-for file in $(find "./" -name ".cnf");
+for file in $(find "./" -name "*.cnf");
 do
     echo Solving $file
 
