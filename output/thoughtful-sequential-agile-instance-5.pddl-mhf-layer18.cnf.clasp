@@ -1,0 +1,9 @@
+c clasp version 3.3.4
+c Reading from ...-agile-instance-5.pddl-mhf-layer18.cnf
+c Solving...
+s UNSATISFIABLE
+c 
+c Models         : 0
+c Calls          : 1
+c Time           : 6.053s (Solving: 4.99s 1st Model: 0.00s Unsat: 4.99s)
+c CPU Time       : 6.037s

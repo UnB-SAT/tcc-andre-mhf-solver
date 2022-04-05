@@ -1,0 +1,52 @@
+c
+c This is glucose 4.0 --  based on MiniSAT (Many thanks to MiniSAT team)
+c
+c ========================================[ Problem Statistics ]===========================================
+c |                                                                                                       |
+c |  Number of variables:        121369                                                                   |
+c |  Number of clauses:        21900030                                                                   |
+c |  Parse time:                   1.83 s                                                                 |
+c |                                                                                                       |
+c | Preprocesing is fully done
+c Too many clauses... No preprocessing
+c |  Simplification time:          0.58 s                                                                 |
+c |                                                                                                       |
+c ========================================[ MAGIC CONSTANTS ]==============================================
+c | Constants are supposed to work well together :-)                                                      |
+c | however, if you find better choices, please let us known...                                           |
+c |-------------------------------------------------------------------------------------------------------|
+c | Adapt dynamically the solver after 100000 conflicts (restarts, reduction strategies...)               |
+c |-------------------------------------------------------------------------------------------------------|
+c |                                |                                |                                     |
+c | - Restarts:                    | - Reduce Clause DB:            | - Minimize Asserting:               |
+c |   * LBD Queue    :     50      |   * First     :   2000         |    * size <  30                     |
+c |   * Trail  Queue :   5000      |   * Inc       :    300         |    * lbd  <   6                     |
+c |   * K            :   0.80      |   * Special   :   1000         |                                     |
+c |   * R            :   1.40      |   * Protected :  (lbd)< 30     |                                     |
+c |                                |                                |                                     |
+c ==================================[ Search Statistics (every  10000 conflicts) ]=========================
+c |                                                                                                       |
+c |          RESTARTS           |          ORIGINAL         |              LEARNT              | Progress |
+c |       NB   Blocked  Avg Cfc |    Vars  Clauses Literals |   Red   Learnts    LBD2  Removed |          |
+c =========================================================================================================
+c |       81         0      123 |   67506 21900030 43942328 |     2     5187     1802     4651 | 44.380 % |
+c |      146         0      136 |   67464  9209530 18518780 |     3     9102     2720    10516 | 44.414 % |
+c |      214         0      140 |   67432  9195865 18491443 |     4    10774     3411    18816 | 44.441 % |
+c |      278         0      143 |   67409  9185073 18469854 |     4    20750     4088    18816 | 44.459 % |
+c last restart ## conflicts  :  66 76 
+c =========================================================================================================
+c restarts              : 317 (146 conflicts in avg)
+c blocked restarts      : 5 (multiple: 5) 
+c last block at restart : 317
+c nb ReduceDB           : 5
+c nb removed Clauses    : 29646
+c nb learnts DL2        : 4381
+c nb learnts size 2     : 3305
+c nb learnts size 1     : 236
+c conflicts             : 46335          (4248 /sec)
+c decisions             : 778434         (0.00 % random) (71365 /sec)
+c propagations          : 133427826      (12232365 /sec)
+c nb reduced Clauses    : 3474
+c CPU time              : 10.9078 s
+
+s SATISFIABLE

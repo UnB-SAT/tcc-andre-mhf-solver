@@ -1,0 +1,9 @@
+c clasp version 3.3.4
+c Reading from ...ional-instance-13.pddl-mhf-layer11.cnf
+c Solving...
+s UNSATISFIABLE
+c 
+c Models         : 0
+c Calls          : 1
+c Time           : 4.489s (Solving: 2.20s 1st Model: 0.00s Unsat: 2.20s)
+c CPU Time       : 4.157s

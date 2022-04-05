@@ -1,0 +1,9 @@
+c clasp version 3.3.4
+c Reading from ...tomatic-instance-9.pddl-mhf-layer9.cnf
+c Solving...
+s UNSATISFIABLE
+c 
+c Models         : 0
+c Calls          : 1
+c Time           : 0.063s (Solving: 0.00s 1st Model: 0.00s Unsat: 0.00s)
+c CPU Time       : 0.061s

@@ -130,7 +130,7 @@ void Solver::solveMHF(){
     }
 
     AllMaxIndependentSetsSolver MISSolver = AllMaxIndependentSetsSolver(parser->numVariables, parser->cnfClausules.size(), cnfGraph);
-    // TODO get one by one and test value
+
     auto test = MISSolver.gerateAllMaxIndependentSets();
 
     while (test.size()) {

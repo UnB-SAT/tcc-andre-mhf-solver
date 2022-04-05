@@ -12,5 +12,4 @@ test.cnf
 log
 log.txt
 log.csv
-output/
 separateByTime

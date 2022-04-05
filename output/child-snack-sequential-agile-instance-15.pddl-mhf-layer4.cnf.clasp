@@ -1,0 +1,11 @@
+c clasp version 3.3.4
+c Reading from ...-agile-instance-15.pddl-mhf-layer4.cnf
+c Solving...
+*** Info : (clasp): INTERRUPTED by signal!
+s UNKNOWN
+c 
+c TIME LIMIT     : 1
+c Models         : 0+
+c Calls          : 1
+c Time           : 1800.000s (Solving: 1795.16s 1st Model: 0.00s Unsat: 0.00s)
+c CPU Time       : 1799.312s
