@@ -8,7 +8,7 @@ AllMaxIndependentSetsSolver::AllMaxIndependentSetsSolver(int numVariables, int n
     this->cnfGraph = cnfGraph;
 
     set<int> tmp_next;
-    // TODO maybe start with special vertex
+
     for(int i = 0; i < numClausules; i++){
         tmp_next.insert(i);
     }
